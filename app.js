@@ -23,6 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
         render() {
             this.container.innerHTML = '';
     
+            const form = document.createElement('form');
+            form.id = 'quiz-form';
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                this.calculateScore();
+            });
+    
             const fragment = document.createDocumentFragment();
     
             this.questions.forEach((question, index) => {
@@ -58,11 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     
             const submitButton = document.createElement('button');
+            submitButton.type = 'submit';
             submitButton.textContent = 'Submit';
-            submitButton.addEventListener('click', () => this.calculateScore());
     
-            fragment.appendChild(submitButton);
-            this.container.appendChild(fragment);
+            form.appendChild(fragment);
+            form.appendChild(submitButton);
+            this.container.appendChild(form);
         }
     
         calculateScore() {
@@ -82,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Sample quiz data
     const quizData = {
         questions: [
             {
@@ -118,10 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
     
-    // Create and render the quiz
     const quiz = new Quiz(quizData.questions, 'quiz-container');
     quiz.render();
-
+    
 
     const quizData2 = {
         questions: [
